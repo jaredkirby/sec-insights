@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { notifications } from '@mantine/notifications';
+
+import { Paper, Row, Col, Text } from "@mantine/core";
 
 import { FiTrash2 } from "react-icons/fi";
-import GitHubButton from "react-github-btn";
 
 import cx from "classnames";
 import type { SelectOption } from "~/types/selection";
@@ -20,6 +22,7 @@ import { customReactSelectStyles } from "~/styles/react-select";
 import { useIntercom } from "react-use-intercom";
 import { LoadingSpinner } from "~/components/basics/Loading";
 import useIsMobile from "~/hooks/utils/useIsMobile";
+import { Container } from "postcss";
 
 export const TitleAndDropdown = () => {
   const router = useRouter();
@@ -71,44 +74,25 @@ export const TitleAndDropdown = () => {
   }, []);
 
   return (
-    <div className="landing-page-gradient-1 relative flex h-max w-screen flex-col items-center font-lora ">
-      <div className="absolute right-4 top-4">
-        <a href="https://www.llamaindex.ai/" target="_blank">
-          <button className="flex items-center justify-center font-nunito text-lg font-bold ">
-            Built by LlamaIndex
-            <img src="logo-black.svg" className="mx-2 rounded-lg" width={40} />
-          </button>
-        </a>
-      </div>
-      <div className="mt-28 flex flex-col items-center">
-        <div className="w-4/5 text-center text-4xl">
-          Empower your organization&apos;s Business Intelligence with{" "}
-          <span className="font-bold">SEC Insights </span>
-        </div>
-        <div className="mt-4 flex items-center justify-center">
-          <div className="w-3/5 text-center font-nunito">
-            Effortlessly analyze multifaceted financial documents such as 10-Ks
-            and 10-Qs.
-          </div>
-        </div>
-        <div className="mt-4 flex items-center justify-center">
-          <GitHubButton href="https://github.com/run-llama/sec-insights">Open-Sourced on Github</GitHubButton>
-        </div>
-      </div>
-      {isMobile ? (
-        <div className="mt-12 flex h-1/5 w-11/12 rounded border p-4 text-center">
-          <div className="text-xl font-bold">
-            To start analyzing documents, please switch to a larger screen!
-          </div>
-        </div>
-      ) : (
-        <div className="mt-5 flex h-min w-11/12 max-w-[1200px] flex-col items-center justify-center rounded-lg border-2 bg-white sm:h-[400px] md:w-9/12 ">
-          <div className="p-4 text-center text-xl font-bold">
-            Start your conversation by selecting the documents you want to
-            explore
-          </div>
-          <div className="h-1/8 flex w-full flex-wrap items-center justify-center font-nunito">
-            <div className="m-1 flex w-96 items-center">
+    <Container className="flex flex-col items-center justify-center h-screen w-screen">
+    <Paper className="landing-page-gradient-1 relative flex h-max w-screen flex-col items-center font-lora">
+      <Row gutter="md" style={{ marginTop: '28px' }}>
+        <Col span={12} style={{ textAlign: 'center', fontSize: '24px' }}>
+          Empower your organization's Business Intelligence with <Text weight={700}>SEC Insights</Text>
+        </Col>
+      </Row>
+      <Row gutter="md" style={{ marginTop: '4px' }}>
+        <Col span={12} style={{ textAlign: 'center' }}>
+          <Text>Effortlessly analyze multifaceted financial documents such as 10-Ks and 10-Qs.</Text>
+        </Col>
+      </Row>
+
+        <Row gutter="md" style={{ marginTop: '5px', borderRadius: '8px', borderWidth: '2px', backgroundColor: 'white' }}>
+          <Col span={12} style={{ padding: '4px', textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+            Start your conversation by selecting the documents you want to explore
+          </Col>
+          <Row gutter="xs">
+            <Col span={6}>
               <DocumentSelectCombobox
                 selectedItem={selectedTicker}
                 setSelectedItem={selectTicker}
@@ -116,17 +100,8 @@ export const TitleAndDropdown = () => {
                 shouldFocusTicker={shouldFocusCompanySelect}
                 setFocusState={setShouldFocusCompanySelect}
               />
-              <div className="flex h-[41px] w-[40px] items-center justify-center bg-[#F7F7F7] pr-3">
-                <span className="mt-1 font-nunito text-[13px] font-bold text-[#7F7F7F]">
-                  ⌘K
-                </span>
-              </div>
-            </div>
-            <div className="m-1 flex h-[41px] w-56 items-center bg-[#F7F7F7]">
-              <div className="flex h-[41px] w-[30px] items-center justify-center bg-[#F7F7F7] pl-3">
-                <CgFileDocument size={30} />
-              </div>
-              <div className="flex-grow">
+              </Col>
+            <Col span={4}>
                 <Select
                   openMenuOnFocus
                   ref={documentTypeFocusRef}
@@ -142,13 +117,8 @@ export const TitleAndDropdown = () => {
                   }}
                   styles={customReactSelectStyles}
                 />
-              </div>
-            </div>
-            <div className="m-1 flex h-[41px] w-48 items-center rounded-e bg-[#F7F7F7]">
-              <div className="flex h-[41px] w-[30px] items-center justify-center bg-[#F7F7F7] pl-3">
-                <AiTwotoneCalendar size={30} />
-              </div>
-              <div className="flex-grow">
+              </Col>
+            <Col span={3}>
                 <Select
                   openMenuOnFocus
                   ref={yearFocusRef}
@@ -269,8 +239,6 @@ export const TitleAndDropdown = () => {
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+          
+      </Container>
+
